@@ -1,4 +1,4 @@
-package com.example.pmc_student_mobile;
+package com.bencicandrej.pmc_student;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

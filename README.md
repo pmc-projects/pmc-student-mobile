@@ -1,6 +1,4 @@
-# pmc_student_mobile
-
-A new Flutter project.
+# PMC Student
 
 ## Getting Started
 
