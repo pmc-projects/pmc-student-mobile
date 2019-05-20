@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "175199507432",
+    "firebase_url": "https://sandbox-8970b.firebaseio.com",
+    "project_id": "sandbox-8970b",
+    "storage_bucket": "sandbox-8970b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175199507432:android:51d067250778ab1b",
+        "android_client_info": {
+          "package_name": "com.bencicandrej.pmcstudent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175199507432-j8ri36uk1utsc982mn67gnlpthpv787e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bencicandrej.pmcstudent",
+            "certificate_hash": "54ef7d8072828da3821012049448665c9d624083"
+          }
+        },
+        {
+          "client_id": "175199507432-jio3918vjg3ll7cicb25fkc765ilkadu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_4JKC2hC0Rqle94ATwgljlXi1iVx34Zs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175199507432-jio3918vjg3ll7cicb25fkc765ilkadu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "175199507432-ls41sooaqpdfijnq0ubj1kmfaunc8jkq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bencicandrej.pmcstudent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

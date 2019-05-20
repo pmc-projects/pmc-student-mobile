@@ -1,4 +1,4 @@
-package com.bencicandrej.pmc_student;
+package com.bencicandrej.pmcstudent;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
