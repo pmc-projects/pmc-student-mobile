@@ -21,7 +21,6 @@ class TodosModel extends BaseModel {
         _todoService.getTodosStream(userId, projectId).listen((todos) {
       setState(ViewState.IDLE);
 
-      print(todos);
       this.todos = todos ?? List();
     });
   }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pmc_student/core/models/project.dart';
 import 'package:pmc_student/core/models/user.dart';
@@ -39,19 +38,21 @@ class HomeView extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    UIHelper.verticalSpace(40.0),
+                    UIHelper.verticalSpaceLarge(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Text(
+                              'PMC Student',
+                              style: headerStyle,
+                            ),
+                          ),
+                        ),
                         LogoutButton(),
                       ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        'PMC Student',
-                        style: headerStyle,
-                      ),
                     ),
                     UIHelper.verticalSpaceSmall(),
                     Padding(
@@ -67,9 +68,12 @@ class HomeView extends StatelessWidget {
                 )
               : Center(child: CircularProgressIndicator()),
           floatingActionButton: FloatingActionButton(
+            elevation: 15.0,
             backgroundColor: Colors.deepPurple,
             child: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, 'project/create');
+            },
           ),
         );
       },
@@ -94,28 +98,4 @@ class HomeView extends StatelessWidget {
             style: TextStyle(),
           ),
         );
-
-  Widget getProjectsUiAlternative(String userId) =>
-      StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
-            .collection("user")
-            .document(userId)
-            .collection('project')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Text('Loading...');
-            default:
-              return ListView(
-                children: snapshot.data.documents
-                    .map((doc) => Text(doc.documentID))
-                    .toList(),
-              );
-          }
-        },
-      );
 }

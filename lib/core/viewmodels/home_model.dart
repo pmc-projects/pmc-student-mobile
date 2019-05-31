@@ -25,6 +25,22 @@ class HomeModel extends BaseModel {
     });
   }
 
+  Future createProject(String userId, String name, String description) async {
+    setState(ViewState.BUSY);
+
+    await _projectService.createProject(userId, name, description);
+
+    setState(ViewState.IDLE);
+  }
+
+  Future deleteProject(String userId, String projectId) async {
+    setState(ViewState.BUSY);
+
+    await _projectService.deleteProject(userId, projectId);
+
+    setState(ViewState.IDLE);
+  }
+
   @override
   void dispose() {
     if (_projectsSubscription != null) {

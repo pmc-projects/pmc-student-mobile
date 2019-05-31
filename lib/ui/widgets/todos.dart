@@ -22,6 +22,7 @@ class Todos extends StatelessWidget {
         )
             : Expanded(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: model.todos
                       .map((todo) =>
                       TodoItem(

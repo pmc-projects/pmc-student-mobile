@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pmc_student/core/models/project.dart';
 import 'package:pmc_student/core/models/user.dart';
+import 'package:pmc_student/core/viewmodels/home_model.dart';
 import 'package:pmc_student/ui/shared/text_styles.dart';
 import 'package:pmc_student/ui/shared/ui_helpers.dart';
+import 'package:pmc_student/ui/views/base_view.dart';
 import 'package:pmc_student/ui/widgets/todos.dart';
 import 'package:provider/provider.dart';
 
@@ -15,20 +17,40 @@ class ProjectView extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            UIHelper.verticalSpaceLarge(),
-            Text(project.name, style: headerStyle),
-            UIHelper.verticalSpaceMedium(),
-            Text(project.description),
-            Todos(user.id, project.id),
-          ],
-        ),
-      ),
+    return BaseView<HomeModel>(
+      builder: (context, model, child) =>
+          Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  UIHelper.verticalSpaceLarge(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(child: Text(project.name, style: headerStyle)),
+                      IconButton(
+                        highlightColor: Colors.deepPurpleAccent,
+                        hoverColor: Colors.deepPurpleAccent,
+                        splashColor: Colors.deepPurpleAccent,
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          model.deleteProject(user.id, project.id);
+
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                  UIHelper.verticalSpaceMedium(),
+                  Text(project.description),
+                  UIHelper.verticalSpaceMedium(),
+                  Todos(user.id, project.id),
+                ],
+              ),
+            ),
+          ),
     );
   }
 }

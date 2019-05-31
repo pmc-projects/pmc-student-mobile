@@ -30,6 +30,8 @@ class PMCStudentApp extends StatelessWidget {
         title: "PMC Student",
         theme: ThemeData(
           accentColor: Colors.deepPurple,
+          canvasColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         initialRoute: initialUser == null ? 'login' : '/',
         onGenerateRoute: Router.generateRoute,
