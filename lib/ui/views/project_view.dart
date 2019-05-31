@@ -18,8 +18,7 @@ class ProjectView extends StatelessWidget {
     var user = Provider.of<User>(context);
 
     return BaseView<HomeModel>(
-      builder: (context, model, child) =>
-          Scaffold(
+      builder: (context, model, child) => Scaffold(
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
@@ -49,6 +48,14 @@ class ProjectView extends StatelessWidget {
                   Todos(user.id, project.id),
                 ],
               ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              elevation: 15.0,
+              backgroundColor: Colors.deepPurple,
+              child: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, 'todo/create', arguments: project);
+              },
             ),
           ),
     );

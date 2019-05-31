@@ -94,7 +94,7 @@ class HomeView extends StatelessWidget {
       : Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'Niste uneli ni jedan predmet. Da biste dodali novi predmet, pritisnite dubme za kreiranje novog projekta u donjem desnom uglu.',
+            'Trenutno nemate nijedan predmet. Da biste dodali novi predmet, pritisnite dugme za kreiranje novog predmeta u donjem desnom uglu.',
             style: TextStyle(),
           ),
         );

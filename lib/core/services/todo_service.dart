@@ -5,6 +5,11 @@ abstract class TodoService {
   Stream<List<Todo>> getTodosStream(String userId, String projectId);
 
   Future toggleTodo(String userId, String projectId, String todoId, bool done);
+
+  Future createTodo(
+      String userId, String projectId, String title, String description);
+
+  Future deleteTodo(String userId, String projectId, String todoId);
 }
 
 class FirestoreTodoService implements TodoService {
@@ -19,6 +24,7 @@ class FirestoreTodoService implements TodoService {
         .collection('project')
         .document(projectId)
         .collection('todo')
+        .orderBy('created_at')
         .snapshots()
         .map((query) => query.documents
             .map((document) => Todo.fromFireStore(document))
@@ -36,5 +42,35 @@ class FirestoreTodoService implements TodoService {
         .updateData({
       'done': done,
     });
+  }
+
+  @override
+  Future createTodo(
+      String userId, String projectId, String title, String description) {
+    return _firestore
+        .collection('user')
+        .document(userId)
+        .collection('project')
+        .document(projectId)
+        .collection('todo')
+        .document()
+        .setData({
+      'name': title,
+      'description': description,
+      'done': false,
+      'created_at': Timestamp.now(),
+    });
+  }
+
+  @override
+  Future deleteTodo(String userId, String projectId, String todoId) {
+    return _firestore
+        .collection('user')
+        .document(userId)
+        .collection('project')
+        .document(projectId)
+        .collection('todo')
+        .document(todoId)
+        .delete();
   }
 }

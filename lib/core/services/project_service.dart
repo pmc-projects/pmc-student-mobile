@@ -20,10 +20,11 @@ class FirestoreProjectService implements ProjectService {
         .collection('user')
         .document(userId)
         .collection('project')
+        .orderBy('created_at')
         .snapshots()
         .map((query) => query.documents
-        .map((document) => Project.fromFireStore(document))
-        .toList());
+            .map((document) => Project.fromFireStore(document))
+            .toList());
   }
 
   @override
@@ -32,10 +33,11 @@ class FirestoreProjectService implements ProjectService {
         .collection('user')
         .document(userId)
         .collection('project')
-        .document(null)
+        .document()
         .setData({
       'name': name,
       'description': description,
+      'created_at': Timestamp.now(),
     });
   }
 

@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:pmc_student/core/models/user.dart';
-import 'package:pmc_student/core/viewmodels/home_model.dart';
+import 'package:pmc_student/core/viewmodels/todos_model.dart';
 import 'package:pmc_student/ui/shared/text_styles.dart';
 import 'package:pmc_student/ui/shared/ui_helpers.dart';
 import 'package:pmc_student/ui/views/base_view.dart';
 import 'package:provider/provider.dart';
 
-class ProjectCreateView extends StatefulWidget {
+class TodoCreateView extends StatefulWidget {
+  final String projectId;
   final String validationMessage;
   final bool isLoading;
   final Function(String name, String description) onCreate;
 
-  const ProjectCreateView(
-      {Key key, this.validationMessage, this.isLoading = false, this.onCreate})
-      : super(key: key);
+  const TodoCreateView({
+    Key key,
+    this.validationMessage,
+    this.isLoading = false,
+    this.onCreate,
+    this.projectId,
+  }) : super(key: key);
 
   @override
-  _ProjectCreateViewState createState() => _ProjectCreateViewState();
+  _TodoCreateViewState createState() => _TodoCreateViewState();
 }
 
-class _ProjectCreateViewState extends State<ProjectCreateView> {
+class _TodoCreateViewState extends State<TodoCreateView> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -29,7 +34,7 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
 
-    return BaseView<HomeModel>(
+    return BaseView<TodosModel>(
       builder: (context, model, child) => Scaffold(
             body: GestureDetector(
               behavior: HitTestBehavior.opaque,
@@ -42,9 +47,9 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
                   padding: EdgeInsets.zero,
                   children: <Widget>[
                     UIHelper.verticalSpaceLarge(),
-                    Text('Novi Predmet', style: headerStyle),
+                    Text('Novi Zadatak', style: headerStyle),
                     UIHelper.verticalSpaceSmall(),
-                    Text('Unesite ime i kretak opis željenog predmeta.',
+                    Text('Unesite tekst zadatka kao i njegov kratak opis.',
                         style: subHeaderStyle),
                     UIHelper.verticalSpaceMedium(),
                     Form(
@@ -60,8 +65,8 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
                               border: Border.all(),
                             ),
                             child: TextFormField(
-                              decoration: InputDecoration.collapsed(
-                                  hintText: 'Ime predmeta'),
+                              decoration:
+                                  InputDecoration.collapsed(hintText: 'Zadatk'),
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Unesite ime predmeta.';
@@ -83,7 +88,7 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
                                 minLines: 4,
                                 maxLines: 100,
                                 decoration: InputDecoration.collapsed(
-                                    hintText: 'Opis predmeta'),
+                                    hintText: 'Opis zadatka'),
                                 controller: _descriptionController,
                               ),
                             ),
@@ -112,7 +117,7 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
                                     ),
                                   )
                                 : Text(
-                                    'Napravi Projekat',
+                                    'Napravi Zadatak',
                                     style: TextStyle(color: Colors.white),
                                   ),
                             onPressed: () {
@@ -120,8 +125,9 @@ class _ProjectCreateViewState extends State<ProjectCreateView> {
                                 return;
                               }
 
-                              model.createProject(
+                              model.createTodo(
                                 user.id,
+                                widget.projectId,
                                 _nameController.text,
                                 _descriptionController.text,
                               );

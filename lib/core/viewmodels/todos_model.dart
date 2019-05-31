@@ -29,6 +29,19 @@ class TodosModel extends BaseModel {
     await _todoService.toggleTodo(userId, projectId, todo.id, !todo.done);
   }
 
+  Future createTodo(
+      String userId, String projectId, String title, String description) async {
+    setState(ViewState.BUSY);
+
+    await _todoService.createTodo(userId, projectId, title, description);
+
+    setState(ViewState.IDLE);
+  }
+
+  Future deleteTodo(String userId, String projectId, String todoId) async {
+    await _todoService.deleteTodo(userId, projectId, todoId);
+  }
+
   @override
   void dispose() {
     if (_todosSubscription != null) {
