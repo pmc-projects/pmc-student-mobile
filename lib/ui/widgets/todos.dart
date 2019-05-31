@@ -17,35 +17,66 @@ class Todos extends StatelessWidget {
         disposable: true,
         onModelReady: (model) => model.fetchTodos(userId, projectId),
         builder: (context, model, child) => model.state == ViewState.BUSY
-            ? Center(child: CircularProgressIndicator())
+            ? Expanded(
+          child: Center(child: CircularProgressIndicator()),
+        )
             : Expanded(
                 child: ListView(
-                children: model.todos.map((todo) => TodoItem(todo)).toList(),
+                  children: model.todos
+                      .map((todo) =>
+                      TodoItem(
+                        todo,
+                        onToggle: (todo) =>
+                            model.toggleTodo(userId, projectId, todo),
+                      ))
+                      .toList(),
               )));
   }
 }
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
+  final Function(Todo todo) onToggle;
 
-  const TodoItem(this.todo);
+  const TodoItem(this.todo, {this.onToggle});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
+    return Card(
       margin: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            todo.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
+      elevation: 5.0,
+      child: InkWell(
+        splashColor: Colors.deepPurpleAccent,
+        onTap: () {
+          if (onToggle != null) {
+            onToggle(todo);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      todo.title,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    UIHelper.verticalSpaceSmall(),
+                    Text(todo.description ?? ''),
+                  ],
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  Checkbox(onChanged: (bool value) {}, value: todo.done)
+                ],
+              )
+            ],
           ),
-          UIHelper.verticalSpaceSmall(),
-          Text(todo.description),
-        ],
+        ),
       ),
     );
   }

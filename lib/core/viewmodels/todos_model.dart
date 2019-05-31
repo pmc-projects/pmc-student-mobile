@@ -14,15 +14,20 @@ class TodosModel extends BaseModel {
 
   TodosModel(this._todoService);
 
-  Future fetchTodos(String accountId, String projectId) async {
+  Future fetchTodos(String userId, String projectId) async {
     setState(ViewState.BUSY);
 
     _todosSubscription =
-        _todoService.getTodosStream(accountId, projectId).listen((todos) {
+        _todoService.getTodosStream(userId, projectId).listen((todos) {
       setState(ViewState.IDLE);
 
+      print(todos);
       this.todos = todos ?? List();
     });
+  }
+
+  Future toggleTodo(String userId, String projectId, Todo todo) async {
+    await _todoService.toggleTodo(userId, projectId, todo.id, !todo.done);
   }
 
   @override

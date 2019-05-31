@@ -95,11 +95,11 @@ class HomeView extends StatelessWidget {
           ),
         );
 
-  Widget getProjectsUiAlternative(String accountId) =>
+  Widget getProjectsUiAlternative(String userId) =>
       StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
             .collection("user")
-            .document(accountId)
+            .document(userId)
             .collection('project')
             .snapshots(),
         builder: (context, snapshot) {
