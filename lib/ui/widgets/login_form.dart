@@ -43,8 +43,11 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(_formMode == FormMode.LOGIN ? 'Prijava' : 'Registracija',
-              style: headerStyle),
+          Text(
+            _formMode == FormMode.LOGIN ? 'Prijava' : 'Registracija',
+            style: headerStyle,
+            key: Key('loginTitle'),
+          ),
           UIHelper.verticalSpaceSmall(),
           Text(
               _formMode == FormMode.LOGIN
@@ -52,9 +55,9 @@ class _LoginFormState extends State<LoginForm> {
                   : 'Unesite željenu email adresu i šifru',
               style: subHeaderStyle),
           UIHelper.verticalSpaceSmall(),
-          LoginTextField(_emailController, "Email adresa", false),
+          LoginTextField(Key("email"), _emailController, "Email adresa", false),
           UIHelper.verticalSpaceSmall(),
-          LoginTextField(_passwordController, "Šifra", true),
+          LoginTextField(Key("password"), _passwordController, "Šifra", true),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: this.widget.validationMessage != null
@@ -71,23 +74,24 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _buildActionButton() {
     return MaterialButton(
+      key: Key('login'),
       color: Colors.deepPurple,
       minWidth: double.infinity,
       child: widget.isLoading
           ? SizedBox(
-              height: 15.0,
-              width: 15.0,
-              child: Theme(
-                data: Theme.of(context).copyWith(accentColor: Colors.white),
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                ),
-              ),
-            )
+        height: 15.0,
+        width: 15.0,
+        child: Theme(
+          data: Theme.of(context).copyWith(accentColor: Colors.white),
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+          ),
+        ),
+      )
           : Text(
-              _formMode == FormMode.LOGIN ? "Prijavite se" : "Registrujte se",
-              style: TextStyle(color: Colors.white),
-            ),
+        _formMode == FormMode.LOGIN ? "Prijavite se" : "Registrujte se",
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: () {
         switch (_formMode) {
           case FormMode.LOGIN:
@@ -108,6 +112,7 @@ class _LoginFormState extends State<LoginForm> {
     return SizedBox(
       height: 30.0,
       child: MaterialButton(
+        key: Key("switch"),
         minWidth: double.infinity,
         child: Text(
           _formMode == FormMode.LOGIN
@@ -124,12 +129,14 @@ class _LoginFormState extends State<LoginForm> {
 }
 
 class LoginTextField extends StatelessWidget {
+  final Key inputKey;
+
   final TextEditingController controller;
 
   final String label;
   final bool isHidden;
 
-  LoginTextField(this.controller, this.label, this.isHidden);
+  LoginTextField(this.inputKey, this.controller, this.label, this.isHidden);
 
   @override
   Widget build(BuildContext context) {
@@ -143,10 +150,11 @@ class LoginTextField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
+          key: inputKey,
           decoration: InputDecoration.collapsed(hintText: label),
           obscureText: isHidden,
           keyboardType:
-              isHidden ? TextInputType.text : TextInputType.emailAddress,
+          isHidden ? TextInputType.text : TextInputType.emailAddress,
           controller: controller,
         ),
       ),

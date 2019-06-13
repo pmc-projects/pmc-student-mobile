@@ -28,8 +28,11 @@ class ProjectView extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(child: Text(project.name, style: headerStyle)),
+                      Expanded(
+                          child: Text(project.name,
+                              style: headerStyle, key: Key("projectTitle"))),
                       IconButton(
+                        key: Key("deleteProject"),
                         highlightColor: Colors.deepPurpleAccent,
                         hoverColor: Colors.deepPurpleAccent,
                         splashColor: Colors.deepPurpleAccent,
@@ -50,6 +53,7 @@ class ProjectView extends StatelessWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton(
+              key: Key('addTodo'),
               elevation: 15.0,
               backgroundColor: Colors.deepPurple,
               child: Icon(Icons.add),

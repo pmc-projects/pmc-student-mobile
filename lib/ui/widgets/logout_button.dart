@@ -9,6 +9,7 @@ class LogoutButton extends StatelessWidget {
       builder: (context, model, child) => SizedBox(
             height: 30.0,
             child: FlatButton(
+              key: Key('logout'),
               child: Text("Izloguj se"),
               textColor: Colors.deepPurple,
               onPressed: () async {

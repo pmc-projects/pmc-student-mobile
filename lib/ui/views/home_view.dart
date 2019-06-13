@@ -47,6 +47,7 @@ class HomeView extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 20.0),
                             child: Text(
                               'PMC Student',
+                              key: Key('title'),
                               style: headerStyle,
                             ),
                           ),
@@ -68,6 +69,7 @@ class HomeView extends StatelessWidget {
                 )
               : Center(child: CircularProgressIndicator()),
           floatingActionButton: FloatingActionButton(
+            key: Key('addProject'),
             elevation: 15.0,
             backgroundColor: Colors.deepPurple,
             child: Icon(Icons.add),

@@ -65,8 +65,9 @@ class _TodoCreateViewState extends State<TodoCreateView> {
                               border: Border.all(),
                             ),
                             child: TextFormField(
+                              key: Key("todoName"),
                               decoration:
-                                  InputDecoration.collapsed(hintText: 'Zadatk'),
+                              InputDecoration.collapsed(hintText: 'Zadatk'),
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Unesite ime predmeta.';
@@ -85,6 +86,7 @@ class _TodoCreateViewState extends State<TodoCreateView> {
                             child: SizedBox(
                               width: double.infinity,
                               child: TextFormField(
+                                key: Key("todoDescription"),
                                 minLines: 4,
                                 maxLines: 100,
                                 decoration: InputDecoration.collapsed(
@@ -102,24 +104,25 @@ class _TodoCreateViewState extends State<TodoCreateView> {
                                 )
                               : UIHelper.verticalSpaceSmall(),
                           MaterialButton(
+                            key: Key('todoCreate'),
                             color: Colors.deepPurple,
                             minWidth: double.infinity,
                             child: widget.isLoading
                                 ? SizedBox(
-                                    height: 15.0,
-                                    width: 15.0,
-                                    child: Theme(
-                                      data: Theme.of(context)
-                                          .copyWith(accentColor: Colors.white),
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.5,
-                                      ),
-                                    ),
-                                  )
+                              height: 15.0,
+                              width: 15.0,
+                              child: Theme(
+                                data: Theme.of(context)
+                                    .copyWith(accentColor: Colors.white),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                ),
+                              ),
+                            )
                                 : Text(
-                                    'Napravi Zadatak',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                              'Napravi Zadatak',
+                              style: TextStyle(color: Colors.white),
+                            ),
                             onPressed: () {
                               if (!_formKey.currentState.validate()) {
                                 return;
